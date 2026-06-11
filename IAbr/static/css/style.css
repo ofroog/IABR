@@ -1,0 +1,770 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #0b0f14;
+    --fg: #e8eff6;
+    --muted: #a5b4c3;
+    --card: #121823;
+    --accent: #22c55e;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    /* 🚫 impede scroll da página inteira */
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    padding: 16px;
+    background: linear-gradient(180deg, rgba(18, 24, 35, .9), rgba(18, 24, 35, .4) 70%, transparent);
+    backdrop-filter: blur(6px);
+}
+
+.brand {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: .5px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* ocupa a altura total */
+}
+
+
+.chat-box {
+    flex: 1;
+    /* faz ocupar o máximo de espaço possível no container */
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 0 96px 0;
+    /* mantém respiro inferior para não colar no form */
+
+    /* 🔽 adicione estas linhas */
+    max-height: calc(100vh - 180px);
+    /* ajusta altura visível, subtraindo header+askbar */
+    overflow-y: auto;
+    /* habilita a rolagem */
+    -webkit-overflow-scrolling: touch;
+    /* suaviza no mobile */
+
+
+}
+
+.msg {
+    display: flex;
+}
+
+.msg.user {
+    justify-content: flex-end;
+}
+
+.bubble {
+    max-width: 80%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: var(--card);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+    white-space: pre-line;
+    /* <--- ADICIONE ISSO */
+
+}
+
+.msg.user .bubble {
+    background: #1c2635;
+    border: 1px solid rgba(255, 255, 255, .06);
+    white-space: pre-wrap;
+
+}
+
+
+.askbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+
+
+    padding: 12px;
+    background: linear-gradient(180deg, rgba(11, 15, 20, .2), rgba(11, 15, 20, .95));
+    backdrop-filter: blur(6px);
+}
+
+.askbar input {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    background: var(--card);
+    color: var(--fg);
+    outline: none;
+}
+
+.askbar button {
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: none;
+    background: var(--accent);
+    color: #062e12;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.askbar button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+
+.links {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.link-card {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    background: #0f1520;
+    border: 1px solid rgba(255, 255, 255, .06);
+    border-radius: 12px;
+    padding: 10px 12px;
+}
+
+.link-card .favicon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+}
+
+.link-card .meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.link-card .meta .title {
+    font-weight: 700;
+}
+
+.link-card .meta .url {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.badge {
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.badge.ok {
+    background: #334155;
+    color: #e2e8f0;
+}
+
+.badge.good {
+    background: #16a34a;
+    color: #052e16;
+}
+
+.badge.warn {
+    background: #f59e0b;
+    color: #231800;
+}
+
+
+.footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 24px;
+    opacity: .75;
+}
+
+
+@media (max-width: 540px) {
+    .bubble {
+        max-width: 92%;
+    }
+}
+
+
+
+.typing .bubble {
+    display: flex;
+    gap: 4px;
+    padding: 8px 12px;
+    background: #f1f1f1;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    background-color: #555;
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.4s infinite;
+}
+
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0.7);
+        opacity: 0.5;
+    }
+
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.chat-video {
+    background: rgba(255, 255, 255, 0.1);
+    /* fundo transparente */
+    backdrop-filter: blur(12px);
+    /* efeito vidro */
+    border-radius: 16px;
+    margin: 12px 0;
+    padding: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.chat-video:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.chat-video .video-header {
+    display: flex;
+    justify-content: space-between;
+    /* título à esquerda, selo à direita */
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    font-size: 0.95em;
+    margin-bottom: 8px;
+}
+
+.chat-video .video-header span {
+    background-color: #28a745;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 8px;
+    font-size: 0.75em;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    order: 2;
+    /* força o selo a ficar no final */
+    margin-right: 10px;
+    /* traz o selo para dentro */
+}
+
+.chat-video iframe {
+    border-radius: 12px;
+    width: 100%;
+    height: 250px;
+    /* player maior */
+    max-width: 700px;
+    /* ocupa mais espaço horizontal do chat */
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.trust-label-video {
+    font-weight: 700;
+    /* mais forte */
+    text-shadow: 0 0 1px #000;
+    /* sombra leve para contraste */
+    color: #008000;
+    /* verde, se quiser manter */
+    margin-right: 5px;
+    /* espaço entre selo e título */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Estilo para navegadores baseados em WebKit (Chrome, Edge, Safari) */
+.chat-box::-webkit-scrollbar {
+    width: 8px;
+    /* largura da barra */
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background: transparent;
+    /* trilho invisível */
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.25);
+    /* cor do "polegar" */
+    border-radius: 8px;
+    /* bordas arredondadas */
+    transition: background 0.3s;
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.45);
+    /* cor mais forte ao passar o mouse */
+}
+
+/* Firefox */
+.chat-box {
+    scrollbar-width: thin;
+    /* barra fina */
+    scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.sources {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.source-item {
+    display: inline-flex;
+    /* em vez de ocupar tudo */
+    align-items: center;
+    gap: 8px;
+    /* espaço entre favicon, link e selo */
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+
+}
+
+.source-item:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.1);
+    /* um pouco mais forte no hover */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.source-item img.favicon {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    opacity: 0.9;
+}
+
+.source-item a {
+    font-weight: 500;
+    color: #3b82f6;
+    /* azul moderno */
+    text-decoration: none;
+    flex-grow: 0;
+    word-break: break-word;
+    /* quebra links longos */
+}
+
+.source-item a:hover {
+    text-decoration: underline;
+}
+
+.source-item .trust {
+    font-size: 11px;
+    font-weight: 600;
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.15);
+    padding: 2px 6px;
+    border-radius: 6px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.layout {
+    display: flex;
+    height: 100vh;
+    /* ocupa tela toda */
+}
+
+.sidebar {
+    width: 220px;
+    background: var(--card);
+    /* fundo igual ao chat */
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.sidebar h2 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: var(--fg);
+    /* mesma cor do texto normal */
+}
+
+#chat-history {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#chat-history li {
+    padding: 6px 8px;
+    margin-bottom: 5px;
+    background: rgba(255, 255, 255, 0.05);
+    /* caixinha translúcida */
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: default;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--fg);
+}
+
+#chat-history li.user {
+    font-weight: bold;
+    color: var(--fg);
+}
+
+#chat-history li.bot {
+    color: var(--muted);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.show-images-btn {
+    margin: 8px 0;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--fg);
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.2s;
+}
+
+.show-images-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.export-btn {
+    margin: 8px 0;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--fg);
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.2s;
+}
+
+.export-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+
+}
+
+
+.export-menu {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 100;
+}
+
+.export-menu div {
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.export-menu div:hover {
+    background: rgba(0, 0, 0, 0.05);
+
+}
+
+.export-btn-wrapper {
+    position: relative;
+    /* importante para que o menu fique dentro do mesmo quadrado */
+    display: inline-block;
+    /* para caber no conteúdo da resposta */
+
+    margin-top: 12px;
+    /* adiciona espaço entre o texto e o botão */
+}
+
+
+.export-menu div:hover {
+    background: rgba(255, 255, 255, 0.1);
+    /* mantém no mesmo tom claro do botão */
+}
+
+
+
+
+
+
+.share-btn {
+    background-color: #1e293b;
+    /* mesmo tom do export-btn,*/
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    margin-left: 8px;
+    /* espaço entre Exportar e Compartilhe */
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.share-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    /* mesmo hover do export-menu */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* === Estilos para respostas do Fact Check === */
+.msg.bot.fakecheck .bubble {
+    border: 2px solid #22c55e;
+    background: rgba(34, 197, 94, 0.08);
+    color: #e8eff6;
+    font-weight: 500;
+    max-width: 100%;
+    /* não ultrapassa a tela */
+    word-wrap: break-word;
+    /* quebra palavras muito longas */
+    overflow-wrap: anywhere;
+    /* quebra links grandes */
+    box-sizing: border-box;
+    /* respeita o padding dentro da largura */
+}
+
+/* Se for FATO */
+.msg.bot.fakecheck.fato .bubble {
+    border-color: #22c55e;
+    /* verde */
+    background: rgba(34, 197, 94, 0.1);
+}
+
+/* Se for FAKE */
+.msg.bot.fakecheck.fake .bubble {
+    border-color: #ef4444;
+    /* vermelho */
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* Se for INCONCLUSIVO */
+.msg.bot.fakecheck.inconclusivo .bubble {
+    border-color: #f59e0b;
+    /* amarelo */
+    background: rgba(245, 158, 11, 0.1);
+}
+
+
+.factcheck-toggle {
+    align-self: center;
+    /* centraliza horizontalmente */
+
+    padding: 6px 10px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #1e293b;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.factcheck-toggle.active {
+    background: #f59e0b;
+    /* laranja/amarelo chamativo, combina com dark mode */
+    color: #1e293b;
+    /* contraste com o fundo escuro */
+    border-color: #fbbf24;
+    /* borda um pouco mais clara */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.askbar-row {
+    display: flex;
+    gap: 8px;
+    /* espaço entre input e botão */
+    justify-content: center;
+    /* centraliza horizontalmente */
+    width: 100%;
+    /* ocupa toda a barra */
+}
+
+.askbar-row input {
+    flex: 1;
+    /* input ocupa o máximo possível */
+    min-width: 0;
+    /* evita overflow em telas pequenas */
+}
+
+.askbar-row button {
+    flex-shrink: 0;
+    /* botão mantém tamanho natural */
+}
+
+
+
+.system-message {
+    background: rgba(30, 41, 59, 0.1);
+    /* mesma paleta do bot, translúcida */
+    color: var(--fg);
+    font-style: italic;
+    border-radius: 14px;
+    padding: 12px 14px;
+    max-width: 80%;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+
+.topbar .brand a {
+    text-decoration: none;
+    /* remove sublinhado do link */
+}
+
+.topbar .brand a img {
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    vertical-align: middle;
+}

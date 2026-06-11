@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17586549659"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        // Google Ads
+            gtag('config', 'AW-17586549659');
+
+        gtag('config', 'AW-17586549659');
+        // GA4
+            gtag('config', 'G-XMRGLZ3HVD');
+    </script>
+
+
+
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='css/letra-r.png') }}">
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description"content="A Roog é uma IA brasileira que responde com clareza e cita fontes confiáveis com selos de credibilidade.">
+    <title>Roog - IA Brasileira com Respostas Confiáveis</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <a href="https://instagram.com/roog.ia/" target="_blank" title="Nos siga no Instagram">
+                <img src="{{ url_for('static', filename='css/instagram-icon.png') }}" alt="Instagram" />
+            </a>
+            <span>Roog</span>
+        </div>
+        <div class="subtitle">IA brasileira</div>
+    </header>
+    <main class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Chat atual</h2>
+            <ul id="chat-history"></ul>
+        </aside>
+    
+
+        <!-- AGORA o campo de pergunta vem primeiro -->
+        <form id="ask-form" class="askbar">
+
+            
+
+
+            <div class="askbar-row">
+
+                <input id="question" type="text" placeholder="Digite sua pergunta..." autocomplete="off" />
+
+                <button type="submit" id="ask-btn">Perguntar</button>
+            </div>
+        </form>
+
+        <!-- Chat vem logo abaixo -->
+        <section class="chat-box" id="chat">
+            <div class="msg bot">
+                <div class="bubble">
+                    Olá! Faça sua pergunta e eu respondo. Também trago links com um selo de confiabilidade.
+                </div>
+            </div>
+        </section>
+
+        <!-- Links confiáveis aparecem depois do chat -->
+        <section id="links" class="links"></section>
+    </main>
+
+    
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+   
+
+</body>
+
+</html>
